@@ -1,0 +1,57 @@
+float xdiff, ydiff, nxdiff, nydiff;
+float size;
+float revolve = 200;
+float radius = 25;
+float angle = 0.0;
+int centerx = 500;
+int centery = 500;
+
+void setup() {
+  size(1000, 1000);
+  noStroke();
+}
+
+void draw() {
+  background(0);
+  strokeWeight(4);
+  line(width/2, 0, width/2, height);
+  line(0, height/2, width, height/2);
+  line(centerx+revolve*cos(angle), height/2, centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+  line(width/2, centerx+revolve*sin(angle), centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+  line(width/2, height/2, centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+  fill(200);
+  triangle(width/2, height/2, centerx+revolve*cos(angle), centerx+revolve*sin(angle), centerx+revolve*cos(angle), height/2);
+  
+  circles();
+}
+
+void circles() {//draws circles
+  blendMode(NORMAL);
+  xdiff = mouseX - centerx;//calculates angle based on mouse position
+  ydiff = mouseY - centery;
+
+  nxdiff = centerx - mouseX;
+  nydiff = centery - mouseY;
+  if (mouseX>centerx) {
+    angle = atan(ydiff/xdiff);
+  } else   if (mouseX<centerx) {
+    angle = atan(ydiff/xdiff)+PI;
+  } 
+
+  pushMatrix();//draws the circular track and balls
+  translate(centerx, centery);
+  strokeWeight(4);
+  stroke(255);
+  fill(0, 0, 0, 0);
+  circle (0, 0, 2*revolve);
+  //strokeWeight(0);
+  fill(0);
+  circle(revolve*cos(angle), revolve*sin(angle), radius);
+  //fill(0, 0, 255);
+  //circle(revolve*cos(angle+PI), revolve*sin(angle+PI), radius);
+  //fill(255);
+  //circle(mouseX-centerx, mouseY-centery, radius);
+  fill(0);
+  //text(angle, 0, 0);
+  popMatrix();
+}
