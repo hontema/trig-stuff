@@ -1,0 +1,134 @@
+float xdiff, ydiff, nxdiff, nydiff;
+float size;
+float revolve = 200;
+float radius = 25;
+float angle = 0.0;
+int centerx = 500;
+int centery = 500;
+int mode;
+
+void setup() {
+  size(1000, 1000);
+  noStroke();
+}
+
+void draw() {
+  background(0);
+  strokeWeight(4);
+  stroke(255);
+  line(width/2, 0, width/2, height);
+  line(0, height/2, width, height/2);
+  switch(mode) {
+  case 0:
+
+    break;
+  case 1:
+    line(centerx+revolve*cos(angle), height/2, centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+    line(width/2, centerx+revolve*sin(angle), centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+    line(width/2, height/2, centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+    fill(200);
+    triangle(width/2, height/2, centerx+revolve*cos(angle), centerx+revolve*sin(angle), centerx+revolve*cos(angle), height/2);
+    fill(255);
+    textSize(50);
+    //text("angle in  radians: "+angle, 10, 50);
+    //text("area of triangle: "+(revolve*cos(angle)*revolve*sin(angle))/2, 10, 100);
+    pushMatrix();//draws the circular track and balls
+    translate(centerx, centery);
+    strokeWeight(4);
+    stroke(255);
+    fill(0, 0, 0, 0);
+    circle (0, 0, 2*revolve);
+    //strokeWeight(0);
+    fill(0);
+    circle(revolve*cos(angle), revolve*sin(angle), radius);
+    //fill(0, 0, 255);
+    //circle(revolve*cos(angle+PI), revolve*sin(angle+PI), radius);
+    //fill(255);
+    //circle(mouseX-centerx, mouseY-centery, radius);
+    fill(0);
+    //text(angle, 0, 0);
+    popMatrix();
+    break;  
+  case 2:
+    line(centerx+revolve*-1*cos(angle), centerx+revolve*-1*sin(angle), centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+    fill(0, 0, 0, 0);
+    circle(centerx+(revolve/2), centery, revolve);
+    fill(0);
+    circle(centerx+revolve*cos(angle)*cos(angle), centerx+revolve*cos(angle)*sin(angle), radius);
+    break;  
+  case 3:
+    line(centerx+revolve*-1*cos(angle), centerx+revolve*-1*sin(angle), centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+    fill(0, 0, 0, 0);
+    circle(centerx, centery-(revolve/2), revolve);
+    fill(0);
+    circle(centerx-revolve*sin(angle)*cos(angle), centerx-revolve*sin(angle)*sin(angle), radius);
+    break;
+  case 4:
+    line(centerx+revolve*-1*cos(angle), centerx+revolve*-1*sin(angle), centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+    fill(0, 0, 0, 0);
+    circle(centerx+(revolve/2), centery, revolve);
+    circle(centerx, centery-(revolve/2), revolve);
+    fill(0);
+    circle(centerx+revolve*cos(angle)*cos(angle), centerx+revolve*cos(angle)*sin(angle), radius);
+    circle(centerx-revolve*sin(angle)*cos(angle), centerx-revolve*sin(angle)*sin(angle), radius);
+    break;
+  case 5:
+    line(centerx+revolve*-1*cos(angle), centerx+revolve*-1*sin(angle), centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+    fill(0, 0, 0, 0);
+    circle(centerx+(revolve/2), centery, revolve);
+    circle(centerx-(revolve/2), centery, revolve);
+    fill(0);
+    circle(centerx+revolve*cos(angle)*cos(angle), centerx+revolve*cos(angle)*sin(angle), radius);
+    circle(centerx+revolve*-1*cos(angle)*cos(angle), centerx+revolve*-1*cos(angle)*sin(angle), radius);
+    break;
+  case 6:
+    line(centerx+revolve*-1*cos(angle), centerx+revolve*-1*sin(angle), centerx+revolve*cos(angle), centerx+revolve*sin(angle));
+    fill(0, 0, 0, 0);
+    circle(centerx+(revolve/2), centery, revolve);
+    circle(centerx-(revolve/2), centery, revolve);
+    circle(centerx, centery+(revolve/2), revolve);
+    circle(centerx, centery-(revolve/2), revolve);
+    fill(0);
+    circle(centerx+revolve*cos(angle)*cos(angle), centerx+revolve*cos(angle)*sin(angle), radius);
+    circle(centerx+revolve*-1*cos(angle)*cos(angle), centerx+revolve*-1*cos(angle)*sin(angle), radius);
+    circle(centerx+revolve*sin(angle)*cos(angle), centerx+revolve*sin(angle)*sin(angle), radius);
+    circle(centerx-revolve*sin(angle)*cos(angle), centerx-revolve*sin(angle)*sin(angle), radius);
+    break;
+  case 7:
+    line(width/2, centerx+revolve*sin(angle), centerx+revolve*cos(angle), height/2);
+    fill(255);
+    textSize(50);
+    //text("angle in  radians: "+angle, 10, 50);
+    //text("area of triangle: "+(revolve*cos(angle)*revolve*sin(angle))/2, 10, 100);
+    pushMatrix();//draws the circular track and balls
+    translate(centerx, centery);
+    strokeWeight(4);
+    stroke(255);
+    fill(0, 0, 0, 0);
+    circle (0, 0, 2*revolve);
+    //strokeWeight(0);
+    fill(0);
+    circle(revolve*cos(angle), 0, radius);
+    circle(0, revolve*sin(angle), radius);
+    //fill(0, 0, 255);
+    //circle(revolve*cos(angle+PI), revolve*sin(angle+PI), radius);
+    //fill(255);
+    //circle(mouseX-centerx, mouseY-centery, radius);
+    fill(0);
+    //text(angle, 0, 0);
+    popMatrix();
+    break;
+  case 8:
+    exit();
+    break;
+  }
+  angle-=.03;
+}
+
+void mousePressed() {
+  if (mouseX>width/2) {
+    mode++;
+  } else {
+    mode--;
+  }
+}
